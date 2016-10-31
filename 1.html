@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Vue入门</title>
+		<link rel="stylesheet" href="css/reset.css" />
+		<script src="js/vue.min.js"></script>
+		<style>
+			*{
+				font-size: 20px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="app">
+			这是数据双向绑定：
+			<p>{{message}}</p>
+			<input v-model='message'>
+		</div><br /><hr />
+		
+		<div id="app">
+			渲染列表，也叫遍历：
+			<ul>
+				<li v-for='todo in todos'>
+					{{todo.text}}
+				</li>
+			</ul>
+		</div><hr />
+		
+		<div class="daoxu">
+			处理用户输入：点击按钮可以倒叙
+			<p>{{message}}</p>
+			<button v-on:click='reverseMessage'>Reverse Message</button>
+		</div><hr />
+		
+		<div class="fabu">
+			发布，点击X可以将内容删除: <br />
+			<input v-model='kong' v-on:keyup.enter='addWu'>
+			<ul>
+				<li v-for='todo in todos'>
+					<span>{{($index+1)+'.'+todo.text}}</span>
+					<button v-on:click='removeKong($index)'>X</button>
+				</li>
+			</ul>
+		</div>
+	</body>
+	<script>
+	// 数据双向绑定
+		new Vue({
+			el:'.app',
+			data:{
+				message:'hellow,Vue.js!'
+			}
+		})
+	//渲染列表,也叫遍历
+		new Vue({
+			el:'#app',
+			data:{
+				todos:[
+					{text:'hellow'},
+					{text:'how are you?'},
+					{text:"I'm all right"}
+				]
+			}
+		})
+	//处理用户输入：倒叙
+		new Vue({
+			el:'.daoxu',
+			data:{
+				message:'hello Vue.js!'
+			},
+			methods:{
+				reverseMessage:function(){
+					this.message=this.message.split('').reverse().join('')
+				}
+			}
+		})
+	//发布
+		new Vue({
+			el:'.fabu',
+			data:{
+				kong:'',
+				todos:[
+					{text:'hello,wuhanfei'}
+				]
+			},
+			methods:{
+				addWu:function(){
+					var text=this.kong.trim()
+					if(text){
+						this.todos.push({text:text})
+						this.kong=''
+					}
+				},
+				removeKong:function(index){
+					this.todos.splice(index,1)
+				}
+			}
+		})
+	</script>
+</html>
